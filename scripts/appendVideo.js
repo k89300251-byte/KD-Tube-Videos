@@ -1,39 +1,26 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
 
-const videosJsonPath = path.join(__dirname, '../videos.json');
-const videosDir = path.join(__dirname, '../videos');
+const file = "videos.json";
 
-// Example: get the newest file added in /videos
-const files = fs.readdirSync(videosDir).filter(f => f.endsWith('.mp4'));
-files.sort((a,b) => fs.statSync(path.join(videosDir, b)).mtimeMs - fs.statSync(path.join(videosDir, a)).mtimeMs);
+let data = JSON.parse(fs.readFileSync(file, "utf8"));
 
-if(files.length === 0) {
-  console.log("No videos found.");
-  process.exit(0);
+const title = process.env.VIDEO_TITLE;
+const desc = process.env.VIDEO_DESC || "No description";
+const filename = process.env.VIDEO_FILE;
+
+if (!filename) {
+  console.error("No VIDEO_FILE passed!");
+  process.exit(1);
 }
 
-const newVideoFile = files[0]; // assume last uploaded video
-const videoTitle = path.parse(newVideoFile).name;
-
-// Load existing JSON
-let data = {};
-if(fs.existsSync(videosJsonPath)) {
-  data = JSON.parse(fs.readFileSync(videosJsonPath));
-} else {
-  data = { home: [], trending: [], gaming: [], music: [] };
-}
-
-// Create new video entry
 const newEntry = {
-  title: videoTitle,
-  desc: "Uploaded via PR",
-  src: `https:/github/k89300251-byte/KD-Tube-Videos@main/Videos/${newVideoFile}`,
+  title,
+  desc,
+  src: `https://cdn.jsdelivr.net/gh/${process.env.GITHUB_REPOSITORY}/videos/${filename}`,
+  thumb: `https://via.placeholder.com/640x360.png?text=${encodeURIComponent(title)}`
 };
 
-// Append to home section
 data.home.push(newEntry);
 
-// Write back to videos.json
-fs.writeFileSync(videosJsonPath, JSON.stringify(data, null, 2));
-console.log(`Added ${newVideoFile} to videos.json`);
+fs.writeFileSync(file, JSON.stringify(data, null, 2));
+console.log("✅ videos.json updated with", filename);
