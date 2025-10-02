@@ -1,0 +1,26 @@
+{
+  "home": [
+    {
+      "title": "My First Video",
+      "desc": "Uploaded via GitHub",
+      "src": "https://cdn.jsdelivr.net/gh/YOURNAME/kdtube-videos/videos/myvideo1.mp4",
+      "thumb": "https://via.placeholder.com/640x360.png?text=My+Video+1"
+    }
+  ],
+  "gaming": [
+    {
+      "title": "Epic Gaming",
+      "desc": "KD Tube gaming section",
+      "src": "https://cdn.jsdelivr.net/gh/YOURNAME/kdtube-videos/videos/myvideo2.mp4",
+      "thumb": "https://via.placeholder.com/640x360.png?text=Gaming+Clip"
+    }
+  ],
+  "music": [
+    {
+      "title": "Chill Beats",
+      "desc": "Music video test",
+      "src": "https://cdn.jsdelivr.net/gh/YOURNAME/kdtube-videos/videos/myvideo3.mp4",
+      "thumb": "https://via.placeholder.com/640x360.png?text=Music+Clip"
+    }
+  ]
+}
