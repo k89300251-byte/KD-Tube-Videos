@@ -3,8 +3,8 @@
     {
       "title": "My First Video",
       "desc": "Uploaded via GitHub",
-      "src": "https://cdn.jsdelivr.net/gh/YOURNAME/kdtube-videos/videos/myvideo1.mp4",
-      "thumb": "https://via.placeholder.com/640x360.png?text=My+Video+1"
+      "src": "https://cdn.jsdelivr.net/gh/YOURNAME/kdtube-videos/videos/video1.mp4",
+      "thumb": "./KD_Tube.jpg"
     }
   ],
   "gaming": [
@@ -12,15 +12,15 @@
       "title": "Epic Gaming",
       "desc": "KD Tube gaming section",
       "src": "https://cdn.jsdelivr.net/gh/k89300251-byte/KD-Tube-Videos@main/Videos/video2.mp4",
-      "thumb": "https://via.placeholder.com/640x360.png?text=Gaming+Clip"
+      "thumb": "./KD_Tube.jpg"
+    }
+  ], 
+  "gaming": [
+    {
+      "title": "Content Warning",
+      "desc": "KD Tube gaming section",
+      "src": "https://cdn.jsdelivr.net/gh/k89300251-byte/KD-Tube-Videos@main/Videos/Content_Warning.mp4",
+      "thumb": "./KD_Tube.jpg"
     }
   ],
-  "music": [
-    {
-      "title": "Chill Beats",
-      "desc": "Music video test",
-      "src": "https://cdn.jsdelivr.net/gh/YOURNAME/kdtube-videos/videos/myvideo3.mp4",
-      "thumb": "https://via.placeholder.com/640x360.png?text=Music+Clip"
-    }
-  ]
 }
