@@ -1,34 +1,43 @@
-name: Auto-update videos.json
+name: KD Tube Video Uploader
 
 on:
   pull_request:
-    paths:
-      - 'videos/**'
+    types: [opened, synchronize]
 
 jobs:
-  update-videos:
+  validate-and-update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
-      - name: Install dependencies
-        run: npm init -y
-
-      - name: Run appendVideo script
-        run: node scripts/appendVideo.js
-
-      - name: Commit & push changes
+      - name: Check for new video files
+        id: files
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add videos.json
-          git commit -m "Auto-update videos.json" || echo "No changes"
-          git push
+          echo "CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^videos/.*\.mp4$' || true)" >> $GITHUB_ENV
+
+      - name: Append to videos.json
+        if: env.CHANGED != ''
+        run: |
+          for file in $CHANGED; do
+            node scripts/appendVideo.js
+          done
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VIDEO_TITLE: "PR Upload: ${{ github.event.pull_request.user.login }}"
+          VIDEO_DESC: "Uploaded via PR"
+          VIDEO_FILE: ${{ env.CHANGED }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Commit changes
+        if: env.CHANGED != ''
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add videos.json
+          git commit -m "Update videos.json with new upload(s)"
+          git push
